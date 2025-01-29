@@ -97,12 +97,12 @@
                     </select>
                 </td>
 
-                <td *ngIf="!isEditing || std.id !== stdIdToEdit">{{ std.dob }}</td>
+                <td *ngIf="!isEditing || std.id !== stdIdToEdit">{{ std.dob | date: 'longDate' | uppercase }}</td>
                 <td *ngIf="isEditing && std.id === stdIdToEdit">
                     <input type="date" [value]="std.dob" #editDob>
                 </td>
 
-                <td *ngIf="!isEditing || std.id !== stdIdToEdit">{{ std.course }}</td>
+                <td *ngIf="!isEditing || std.id !== stdIdToEdit">{{ std.course | uppercase }}</td>
                 <td *ngIf="isEditing && std.id === stdIdToEdit">
                     <select name="course" class="select-gender-course" [value]="std.course" #editCourse>
                         <option value="MBA">MBA</option>
@@ -116,9 +116,9 @@
                     <input type="number" min="0" max="600" [value]="std.marks" #editMarks>
                 </td>
 
-                <td>{{ std.marks / totalMarks }}</td>
+                <td>{{ (std.marks) | percentage:totalMarks:2 }}</td>
 
-                <td *ngIf="!isEditing || std.id !== stdIdToEdit">{{ std.fee | currency: 'INR': true: '3.0-0'}}</td>
+                <td *ngIf="!isEditing || std.id !== stdIdToEdit">{{ std.fee | currency:'PKR':false}}</td>
                 <td *ngIf="isEditing && std.id === stdIdToEdit">
                     <input type="number" min="0" [value]="std.fee" #editFee>
                 </td>
