@@ -3,10 +3,11 @@ import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Student } from '../Models/Student';
 import { StudentService } from '../Services/student.service';
 import { PercentagePipe } from '../Pipes/percentage.pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule , PercentagePipe],
+  imports: [CommonModule, PercentagePipe, FormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -19,7 +20,14 @@ export class AdminComponent {
 
   students!: Student[];
   totalMarks!: number;
-
+  
+  filterText: string = "All"
+  totalStu = new Promise((res , rej)=>{
+  setTimeout(() => {
+    res(this.students.length)
+  }, 2000);
+  });
+  
   //PROPERTIES FOR INSERTING
   @ViewChild('name') Name!: ElementRef;
   @ViewChild('gender') Gender!: ElementRef;
@@ -37,9 +45,20 @@ export class AdminComponent {
   @ViewChild('editFee') editFee!: ElementRef;
 
   ngOnInit() {
-    this.students = this.studentService.students;
+    this.students = this.studentService.filterStudentByGender(this.filterText);
     this.totalMarks = this.studentService.totalMarks;
+
+
   }
+
+  onFilterData(event : any) {
+    let selectedValue = event.target.value;
+    this.filterText = selectedValue
+    this.students = this.studentService.filterStudentByGender(selectedValue);
+
+  }
+
+
 
   OnInsertClicked() {
     this.isInserting = true;
@@ -57,6 +76,8 @@ export class AdminComponent {
       this.Fee.nativeElement.value
     );
     this.isInserting = false;
+    this.students = this.studentService.filterStudentByGender(this.filterText);
+
   }
 
   OnEditClicked(stdId: number) {
@@ -76,5 +97,9 @@ export class AdminComponent {
     student.fee = this.editFee.nativeElement.value;
 
     this.isEditing = false;
+    this.students = this.studentService.filterStudentByGender(this.filterText);
+
   }
+
+
 }

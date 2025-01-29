@@ -6,12 +6,13 @@
             <h2>Student Management</h2>
         </div>
         <div class="admin-header-filter">
-            <select name="gender" class="filter-select">
+            <select name="gender" class="filter-select" [value]="filterText" (change)="onFilterData($event)">
                 <option value="All">All</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
             </select>
         </div>
+        <div style="margin: 10px 0;">Total Students:{{totalStu | async }}</div>
     </div>
     <!--HEADER ENDS-->
 
