@@ -61,6 +61,7 @@ export class UsersComponent {
       this.onConfirmObs.unsubscribe();
       containerViewRef.clear();
 
+      // user delete
       if (data) {
         const index = this.userService.users.indexOf(this.userToDelete);
         this.userService.users.splice(index, 1);
