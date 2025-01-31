@@ -10,11 +10,23 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class AppComponent {
   title = 'template-driven-form';
+
+
   firstname!: string;
   lastname!: string;
   emailaddress!: string;
+  phonenumber!: string;
   dob!: string;
-  username !: string;
+  username!: string;
+  address1!: string;
+  address2!: string;
+  country!: string;
+  city!: string;
+  region!: string;
+  postalcode!: string;
+  isAgreed: boolean = false;
+
+
   selectCountry: string = 'Select Country';
 
   @ViewChild('formReg') form!: NgForm;
@@ -26,34 +38,62 @@ export class AppComponent {
   ]
 
 
+
   onFormSubmit() {
     console.log(this.form)
-    console.log(this.form.value.address.postalcode);
-    console.log(this.dob)
-    // this.form.reset();
+
+    this.firstname = this.form.value.firstname;
+    this.lastname = this.form.value.lastname;
+    this.emailaddress = this.form.value.email;
+    this.phonenumber = this.form.value.phonenumber;
+    this.dob = this.form.value.dob;
+    this.username = this.form.value.username;
+    this.address1 = this.form.value.address.address1;
+    this.address2 = this.form.value.address.address2;
+    this.country = this.form.value.address.country;
+    this.city = this.form.value.address.city;
+    this.region = this.form.value.address.region;
+    
+    this.postalcode = this.form.value.address.postalcode 
+    this.isAgreed = this.form.value
+    
+
+
+
+
+    this.form.reset();
+
+    this.form.form.patchValue({
+      gender: 'male',
+      address: {
+        country: "Pakistan"
+      }
+
+    })
   }
 
   generateUsername() {
     let username: string = "";
 
-    if (this.firstname.length >= 3) {
-      username += this.firstname.slice(0, 3);
+    if (this.form.value.firstname.length >= 3) {
+      username += this.form.value.firstname.slice(0, 3);
     } else {
-      username += this.firstname;
+      username += this.form.value.firstname;
     }
-    if (this.lastname.length >= 3) {
-      username += this.lastname.slice(0, 3);
+    if (this.form.value.lastname.length >= 3) {
+      username += this.form.value.lastname.slice(0, 3);
     } else {
-      username += this.lastname;
+      username += this.form.value.lastname;
     }
 
     let dateTime = new Date(this.dob);
     username += "@" + dateTime.getDate();
 
     username = username.toLowerCase();
-    // this.username = username;
+    console.log(username)
+    // this.username = username
 
-//*update a value using servalue
+    //*update a value using servalue
 
     // this.form.setValue({
     //   firstname: this.form.value.firstname,
@@ -77,10 +117,10 @@ export class AppComponent {
     // *Update a value using patch Value
 
     this.form.form.patchValue({
-      username : username,
-      address:{
-        city:"BWp"
-      }
+      username: username,
+      // address: {
+      //   city: "BWP"
+      // }
     })
   }
 
