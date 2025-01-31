@@ -4,14 +4,13 @@
   <form class="form" (ngSubmit)="onFormSubmit()" #formReg="ngForm">
     <div class="column">
       <div class="input-box">
-        <input type="text" placeholder="First Name" name="firstname" required [(ngModel)]="firstname"
-          #fname="ngModel" />
+        <input type="text" placeholder="First Name" name="firstname" required ngModel #fname="ngModel" />
         <div><small *ngIf="fname.invalid && fname.touched">*First Name is a required Field</small></div>
         <span *ngIf="firstname">You Entered:{{firstname}}</span>
       </div>
 
       <div class="input-box">
-        <input type="text" placeholder="Last Name" name="lastname" required [(ngModel)]="lastname" #lname="ngModel" />
+        <input type="text" placeholder="Last Name" name="lastname" required ngModel #lname="ngModel" />
         <div><small *ngIf="lname.invalid && lname.touched">*Last Name is a required Field</small></div>
         <span *ngIf="lastname">You Entered:{{lastname}}</span>
 
@@ -20,7 +19,7 @@
     </div>
 
     <div class="input-box">
-      <input type="text" placeholder="Email" name="email" required email [(ngModel)]="emailaddress" #email="ngModel" />
+      <input type="text" placeholder="Email" name="email" required email ngModel #email="ngModel" />
       <div><small *ngIf="email.invalid && email.touched">*Entered Email is not valid</small></div>
       <span *ngIf="emailaddress">You Entered:{{emailaddress}}</span>
 
@@ -39,10 +38,11 @@
     </div>
 
     <div class="input-box">
-      <input type="text" placeholder="username" name="username" [value]="username" ngModel required #uname="ngModel" />
+      <input type="text" placeholder="username" name="username" ngModel required #uname="ngModel" />
       <div><small *ngIf="uname.invalid && uname.touched">*Username is a required Field</small></div>
 
-      <button class="btn-gen-username" [disabled]="fname.invalid || lname.invalid || tempDob.invalid" (click)="generateUsername()">
+      <button class="btn-gen-username" type="button" [disabled]="fname.invalid || lname.invalid || tempDob.invalid"
+        (click)="generateUsername()">
         Create a Username
       </button>
     </div>
@@ -51,7 +51,7 @@
       <h3>Gender</h3>
       <div class="gender-option">
         <div class="gender" *ngFor="let gen of genders">
-          <input type="radio" [id]="gen.id" [value]="gen.value" name="gender" ngModel #gender="ngModel" />
+          <input type="radio" [id]="gen.id" [value]="gen.value" name="gender" [ngModel] #gender="ngModel" />
           <label [for]="gen.id">{{gen.display}}</label>
           <div><small *ngIf="gender.invalid && gender.touched">*Gender is a required</small></div>
 
@@ -81,10 +81,40 @@
       </div>
       <div class="column">
         <input type="text" placeholder="Region" name="region" ngModel />
-        <input type="number" placeholder="Postal code" name="postalcode" ngModel required />
+        <input type="number" placeholder="Postal code" name="postalcode" required pattern="^[0-9]{5}$" ngModel
+          required />
       </div>
     </div>
+
+    <div class="column" [ngModel]="isAgreed">
+      <input type="checkbox" name="agreement" id="agreement">
+      <label for="agreement">I agree to terms & conditions</label>
+    </div>
+
     <small *ngIf="addr.invalid && addr.touched">*Some of the address Fields does not contain a valid value</small>
     <input type="submit" value="Submit" class="submit-btn" [disabled]="!formReg.valid">
   </form>
+</section>
+
+<section class="user-detail-container">
+  <div class="user-details-container">
+    <div class="user-avatar">
+      <p *ngIf="username">{{firstname.slice(0, 1).toUpperCase()}}{{lastname.slice(0, 1).toUpperCase()}}</p>
+    </div>
+    <div class="user-details">
+      <div class="user-name">
+        <h2>{{ firstname }} {{ lastname }}</h2>
+      </div>
+      <p><b>Email:</b> {{ emailaddress}}</p>
+      <p><b>Username:</b> {{ username }} </p>
+      <p><b>Date of birth:</b> {{ dob }}</p>
+      <div class="user-name">
+        <h3>Address</h3>
+      </div>
+      <span>{{country }}</span>.
+      <span>{{ city }}</span>.
+      <span>{{ region }}</span>.
+      <span> {{ postalcode}}</span>
+    </div>
+  </div>
 </section>
