@@ -100,15 +100,15 @@
     <!--HTML for Experience Form Array -->
 
 
-    <div class="input-box experience" formArrayName="experiance">
-      <div *ngFor="let exp of reactiveForm.get('experiance')['controls']; let i = index" [formGroupName]="i">
+    <div class="input-box experience" formArrayName="experience">
+      <div *ngFor="let exp of reactiveForm.get('experience')['controls']; let i = index" [formGroupName]="i">
 
         <div class="experience">
-          <label>Experience</label>
-          <input type="text" placeholder="Company Name" />
+          <label>Experience: {{i+1}}</label>
+          <input type="text" placeholder="Company Name" formControlName="company" />
           <div class="column">
             <div class="select-box">
-              <select>
+              <select formControlName="position">
                 <option hidden>Position</option>
                 <option>Junior Developer</option>
                 <option>Software Developer</option>
@@ -116,19 +116,19 @@
                 <option>Team Lead</option>
               </select>
             </div>
-            <input type="number" placeholder="Experience" />
+            <input type="number" placeholder="Experience" formControlName="totalexp" />
           </div>
           <div class="column">
-            <input type="date" placeholder="Start Date" />
-            <input type="date" placeholder="End Date" />
+            <input type="date" placeholder="Start Date" formControlName="startdate" />
+            <input type="date" placeholder="End Date" formControlName="enddate" />
           </div>
-          <button type="button" class="btn-add-delete">Delete Experience</button>
+          <button type="button" class="btn-add-delete" (click)="deleteExperience(i)">Delete Experience</button>
         </div>
       </div>
     </div>
 
 
-    <button type="button" class="btn-add-delete">Add Experience</button>
+    <button type="button" class="btn-add-delete" (click)="addExperience()">Add Experience</button>
 
     <input type="submit" value="Submit" class="submit-btn" [disabled]="reactiveForm.invalid">
     <!-- [disabled]="!reactiveForm.valid" -->
