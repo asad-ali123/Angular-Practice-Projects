@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { CreateTaskComponent } from "./create-task/create-task.component";
 import { CommonModule } from '@angular/common';
 import { Task } from '../Model/task';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ import { Task } from '../Model/task';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-
+  constructor(private http: HttpClient) { }
 
   showCreateTaskForm: boolean = false;
   OpenCreateTaskForm() {
@@ -23,7 +24,10 @@ export class DashboardComponent {
     this.showCreateTaskForm = false
   }
   createTask(data: Task) {
-    console.log(data)
+    this.http.post<{ name: string }>('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json', data)
+      .subscribe((res) => {
+        console.log(res)
+      })
 
   }
 
