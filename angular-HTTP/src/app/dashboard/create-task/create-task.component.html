@@ -1,10 +1,10 @@
 <div class="overlay">
     <div class="popup">
-        <h2>'Create a new Task</h2>
+        <h2>{{IsEditMode ? 'Update Task' : 'Create a new Task'}}</h2>
         <a class="close" href="#" (click)="OnCloseForm()">&times;</a>
         <div class="content">
             <section class="container">
-                <form action="#" class="form"  #taskcreateForm="ngForm" (ngSubmit)="onSubmittedForm()">
+                <form action="#" class="form" #taskcreateForm="ngForm" (ngSubmit)="onSubmittedForm()">
                     <div class="input-box">
                         <label>Title*</label>
                         <input type="text" name="title" required ngModel />
@@ -26,7 +26,7 @@
                     <div class="input-box address">
                         <div class="column">
                             <div class="select-box">
-                                <select name="priority"  ngModel>
+                                <select name="priority" ngModel>
                                     <option hidden value="priority">Priority</option>
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
@@ -45,7 +45,8 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" >Create Task</button>
+                    <button type="submit">{{IsEditMode ? 'Update Task': 'Create Task'}}</button>
+
                 </form>
             </section>
         </div>

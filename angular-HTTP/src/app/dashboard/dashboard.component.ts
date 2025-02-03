@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { CreateTaskComponent } from "./create-task/create-task.component";
 import { CommonModule } from '@angular/common';
-import { Task } from '../Model/task';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
+
+import { TaskService } from '../Services/task.service';
+import { Task } from '../Model/Task';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,50 +13,43 @@ import { map } from 'rxjs';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
-  constructor(private http: HttpClient) { };
-  allTasks: Task[] = [];
-
   ngOnInit(): void {
     this.fetchAllTasks();
 
   }
 
+  taskService: TaskService = inject(TaskService);
+  allTasks: Task[] = [];
+  selectedTask: any;
   showCreateTaskForm: boolean = false;
+  editMode: boolean = false;
+  currentTaskId: string | undefined;
   OpenCreateTaskForm() {
     this.showCreateTaskForm = true;
-
   }
-
   CloseCreateTaskForm() {
-    this.showCreateTaskForm = false
+    this.showCreateTaskForm = false;
+    this.editMode = false;
   }
-  createTask(data: Task) {
-    this.http.post<{ name: string }>('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json', data)
-      .subscribe((res) => {
-        console.log(res);
-        this.fetchAllTasks()
 
-      })
+  // HTTP Methods
+  createOrUpdateTask(data: Task) {
+    if (!this.editMode) {
+      this.taskService.CreateTask(data);
+    } else {
+
+      this.taskService.UpdateTask(this.currentTaskId, data)
+    }
+
+
+
 
   }
 
   private fetchAllTasks() {
-    this.http.get<{ [key: string]: Task }>(
-      'https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json')
-      .pipe(map((response) => {
-        //TRANSFORM DATA
-        let tasks = [];
-        for (let key in response) {
-          if (response.hasOwnProperty(key)) {
-            tasks.push({ ...response[key], id: key })
-          }
-        }
-        return tasks
-
-      }))// return the transform data
-      .subscribe((tasks) => {
-        this.allTasks = tasks
-      })
+    this.taskService.FetchAllTasks().subscribe((tasks) => {
+      this.allTasks = tasks;
+    })
   }
 
   fetchAllTasksClicked() {
@@ -64,21 +57,21 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteTask(id: string | undefined) {
-    // let check = this.allTasks.filter((task) => {
-    //   if (task.id === id) {
-    //     return this.allTasks.pop();
-    //   }
-    //   return
-    // })
-    // console.log(check)
-    this.http.delete('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks/' + id + '.json')
-      .subscribe(() => this.fetchAllTasks());
+    this.taskService.DeleteTask(id);
+
 
   }
 
   deletAllTasks() {
-    this.http.delete('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json')
-      .subscribe(() => this.fetchAllTasks());
+    this.taskService.DeleteAllTasks();
+
+  }
+
+  onEditClicked(id: string | undefined) {
+    this.currentTaskId = id;
+    this.showCreateTaskForm = true;
+    this.editMode = true;
+    this.selectedTask = this.allTasks.find((task) => task.id === id)
   }
 
 }
