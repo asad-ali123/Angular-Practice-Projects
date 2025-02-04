@@ -7,10 +7,11 @@ import { TaskService } from '../Services/task.service';
 import { Task } from '../Model/Task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { TeskDetailComponent } from "./tesk-detail/tesk-detail.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CreateTaskComponent, CommonModule],
+  imports: [CreateTaskComponent, CommonModule, TeskDetailComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -19,11 +20,13 @@ export class DashboardComponent implements OnInit {
   allTasks: Task[] = [];
   selectedTask: any;
   showCreateTaskForm: boolean = false;
+  showDetail: boolean = false;
   editMode: boolean = false;
   currentTaskId: string | undefined;
   isLoading: boolean = false;
   errorMessage!: string | null;
   errorSub!: Subscription;
+  currentTaskDetails: Task | null = null
 
   ngOnInit(): void {
     this.fetchAllTasks();
@@ -47,6 +50,21 @@ export class DashboardComponent implements OnInit {
     this.showCreateTaskForm = false;
     this.editMode = false;
   }
+  // Show task details component
+
+  onShowDetail(id: string | undefined) {
+    this.showDetail = true;
+    this.taskService.getTaskDetails(id).subscribe((data)=>{
+       let currentTask: Task = data as Task;
+       this.currentTaskDetails =  currentTask
+
+    }  )
+    
+  }
+  onCloseDetail() {
+    this.showDetail = false;
+  }
+
 
   // HTTP Methods
   createOrUpdateTask(data: Task) {
