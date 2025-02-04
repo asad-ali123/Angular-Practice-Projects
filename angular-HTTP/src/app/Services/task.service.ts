@@ -36,8 +36,8 @@ export class TaskService {
 
     FetchAllTasks() {
         let queryParams = new HttpParams();
-        queryParams = queryParams.set('page' , 1);
-        queryParams = queryParams.set('item' , 10);
+        // queryParams = queryParams.set('page' , 1);
+        // queryParams = queryParams.set('item' , 10);
         return this.http.get<{ [key: string]: Task }>(
             'https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json'  ,{params : queryParams})
             .pipe(map((response) => {
