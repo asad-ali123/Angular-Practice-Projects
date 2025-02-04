@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
 import { catchError, map, Subject, throwError } from "rxjs";
@@ -16,7 +16,8 @@ export class TaskService {
     allTasks: Task[] = [];
 
     CreateTask(task: Task) {
-        this.http.post<{ name: string }>('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json', task)
+        const headers = new HttpHeaders({ 'My-header': 'Hello World' })
+        this.http.post<{ name: string }>('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json', task, { headers: headers })
             .pipe(catchError((err) => {
                 //Write the logic of log the errors
                 const errObj = { statusCode: err.status, errorMessage: err.message, dateTime: new Date() }
@@ -34,8 +35,11 @@ export class TaskService {
     }
 
     FetchAllTasks() {
+        let queryParams = new HttpParams();
+        queryParams = queryParams.set('page' , 1);
+        queryParams = queryParams.set('item' , 10);
         return this.http.get<{ [key: string]: Task }>(
-            'https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json')
+            'https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json'  ,{params : queryParams})
             .pipe(map((response) => {
                 //TRANSFORM DATA
                 let tasks = [];
@@ -107,7 +111,11 @@ export class TaskService {
     }
 
     getTaskDetails(id: string | undefined) {
-        return this.http.get('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks/' + id + '.json')
+        const headers = new HttpHeaders()
+            .set('content-type', 'Application/json')
+            .append('content-type', 'text/html')
+            .set('Access-Control-Allow-Origin' , '* ')
+        return this.http.get('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks/' + id + '.json', { headers: headers })
             .pipe(map((response) => {
                 let task = {};
                 task = { ...response, id: id };
