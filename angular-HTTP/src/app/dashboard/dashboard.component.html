@@ -22,7 +22,7 @@
 
     <div class="dashboard-item-container">
         <div class="sb sb-error" *ngIf="errorMessage">{{errorMessage}}</div>
-        <div class="loader" *ngIf="isLoading"></div>
+        <div class="loader" *ngIf="isLoading" ></div>
         <div style="text-align: center;" *ngIf="allTasks.length < 1">
             <h2>No Tasks have been created yet.</h2>
         </div>
