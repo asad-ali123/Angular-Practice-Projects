@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../Services/auth.service';
 import { LoaderComponent } from "../utility/loader/loader.component";
 import { SnackbarComponent } from "../utility/snackbar/snackbar.component";
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
 
   @ViewChild('authForm') authForm!: NgForm;
   authService: AuthService = inject(AuthService);
+  router:Router = inject(Router);
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -35,6 +37,8 @@ export class LoginComponent {
         next: (data) => {
           console.log(data);
           this.isLoading = false;
+          this.router.navigate(['dashboard']);
+
         },
         error: (err) => {
           this.isLoading = false;
@@ -49,6 +53,8 @@ export class LoginComponent {
         next: (res) => {
           console.log(res);
           this.isLoading = false;
+          this.router.navigate(['dashboard']);
+
 
         },
         error: (err) => {
