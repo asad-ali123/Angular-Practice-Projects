@@ -8,10 +8,12 @@ import { Task } from '../Model/Task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { TeskDetailComponent } from "./tesk-detail/tesk-detail.component";
+import { LoaderComponent } from "../utility/loader/loader.component";
+import { SnackbarComponent } from "../utility/snackbar/snackbar.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CreateTaskComponent, CommonModule, TeskDetailComponent],
+  imports: [CreateTaskComponent, CommonModule, TeskDetailComponent, LoaderComponent, SnackbarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
