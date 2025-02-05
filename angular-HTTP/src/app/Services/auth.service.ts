@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { AuthResponse } from "../Model/AuthResponse";
-import { catchError, throwError } from "rxjs";
+import { catchError, Subject, tap, throwError } from "rxjs";
+import { User } from "../Model/User";
 
 @Injectable({
     providedIn: 'root'
@@ -9,19 +10,31 @@ import { catchError, throwError } from "rxjs";
 
 export class AuthService {
     http: HttpClient = inject(HttpClient);
-    error: string | null = null;
+    user = new Subject<User>();
 
     signup(email: string, password: string) {
         const data = { email: email, password: password, returnSecureToken: true }
         return this.http.post<AuthResponse>
             ('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAtEWM_zmK-lYk44bKYjog9wGDDvT7Ww5o',
-                data).pipe(catchError(this.handleError))
+                data).pipe(catchError(this.handleError), tap((res) => {
+                    this.handleCreateUser(res)
+                }))
     }
 
     login(email: string, password: string) {
         const data = { email: email, password: password, returnSecureToken: true };
         return this.http.post<AuthResponse>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAtEWM_zmK-lYk44bKYjog9wGDDvT7Ww5o',
-            data).pipe(catchError(this.handleError))
+            data).pipe(catchError(this.handleError), tap((res) => {
+                this.handleCreateUser(res)
+            }))
+
+    }
+
+    private handleCreateUser(res: AuthResponse) {
+        const expiresInTs = new Date().getTime() + +res.expiresIn * 1000;
+        const expiresIn = new Date(expiresInTs);
+        const user = new User(res.email, res.localid, res.idToken, expiresIn);
+        this.user.next(user)
 
     }
 
