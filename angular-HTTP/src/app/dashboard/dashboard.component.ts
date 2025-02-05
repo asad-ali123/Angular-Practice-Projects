@@ -77,6 +77,9 @@ export class DashboardComponent implements OnInit {
 
   private fetchAllTasks() {
     this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
     this.taskService.FetchAllTasks().subscribe({
       next: (tasks) => {
         this.allTasks = tasks;

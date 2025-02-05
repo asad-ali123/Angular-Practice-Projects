@@ -1,19 +1,19 @@
 .dashboard-container{
     padding: 30px 100px;
-    background-color: #dedede;
 }
 
 hr{
-    border: #fff 1.5px solid;
+    border: #dedede 1.5px solid;
     margin: 20px 0px;
 }
 .dashboard-item-container{
     margin-top: 30px;
     padding: 30px 50px;
-    border: #fff 1.5px solid;
+    border: #dedede 1.5px solid;
     display: flex;
     flex-wrap: wrap;
 }
+
 
 .task-action-icons{
     text-align: right;
@@ -35,6 +35,7 @@ i{
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 3px;
+    font-size: 14px;
 }
 .task-complete{
     border-top: green 10px solid;
@@ -53,10 +54,12 @@ i{
 }
 
 .create-task-btn{
-    padding: 12px 30px;
-    background-color: #3498DB;
+    padding: 10px 20px;
+    background-color: #28282B;
     border: #cdcdcd 1px solid;
     color: white;
+    margin: 0px 2px;
+    border-radius: 20px;
 }
 
 .loader {
@@ -75,8 +78,8 @@ i{
   }
 
   .sb {
-    /* min-width: 350px; Set a default minimum width */
-    /* margin-left: -125px; Divide value of min-width by 2 */
+    min-width: 350px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
     text-align: center; /* Centered text */
     border-radius: 2px; /* Rounded borders */
     padding: 16px; /* Padding */
