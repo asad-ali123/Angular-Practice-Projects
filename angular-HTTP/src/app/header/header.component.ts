@@ -20,7 +20,8 @@ export class HeaderComponent {
 
 
   ngOnInit() {
-    this.userSubject = this.authService.user.subscribe((user: User) => {
+    this.userSubject = this.authService.user.subscribe((user: User |null ) => {
+      console.log(user)
       this.isLoggedIn = user ? true : false;
     })
   }
