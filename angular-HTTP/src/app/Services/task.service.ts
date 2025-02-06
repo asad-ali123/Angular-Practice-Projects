@@ -1,11 +1,11 @@
-import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse,  HttpHeaders } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
-import { catchError, exhaustMap, map, Subject, take, throwError } from "rxjs";
+import { catchError ,map, Subject, throwError } from "rxjs";
 import { Task } from "../Model/Task";
 import { LoggingService } from "./Logging.service";
 import { AuthService } from "./auth.service";
-import { User } from "../Model/User";
+
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class TaskService {
     http: HttpClient = inject(HttpClient);
     errorSubject = new Subject<HttpErrorResponse>();
     logservice: LoggingService = inject(LoggingService);
-    authService : AuthService =inject(AuthService);
+    authService: AuthService = inject(AuthService);
 
 
     allTasks: Task[] = [];
@@ -39,14 +39,8 @@ export class TaskService {
     }
 
     FetchAllTasks() {
-        // this.authService.user.pipe(take(1) , exhaustMap()).subscribe((user:User | null)=>{
-        //     console.log(user)
-        // })
-        let queryParams = new HttpParams();
-        // queryParams = queryParams.set('page' , 1);
-        // queryParams = queryParams.set('item' , 10);
         return this.http.get<{ [key: string]: Task }>(
-            'https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json'  ,{params : queryParams})
+            'https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks.json')
             .pipe(map((response) => {
                 //TRANSFORM DATA
                 let tasks = [];
@@ -121,7 +115,7 @@ export class TaskService {
         const headers = new HttpHeaders()
             .set('content-type', 'Application/json')
             .append('content-type', 'text/html')
-            .set('Access-Control-Allow-Origin' , '* ')
+            .set('Access-Control-Allow-Origin', '* ')
         return this.http.get('https://angularhttp-89e90-default-rtdb.firebaseio.com/tasks/' + id + '.json', { headers: headers })
             .pipe(map((response) => {
                 let task = {};
