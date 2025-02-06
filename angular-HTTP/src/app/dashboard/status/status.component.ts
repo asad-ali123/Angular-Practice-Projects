@@ -3,12 +3,12 @@ import { Task } from '../../Model/Task';
 import { TaskService } from '../../Services/task.service';
 
 @Component({
-  selector: 'app-stats',
+  selector: 'app-status',
   imports: [],
   templateUrl: './status.component.html',
   styleUrl: './status.component.css'
 })
-export class StatsComponent {
+export class StatusComponent {
   inprogress: number = 0;
   open: number = 0;
   started: number = 0;
