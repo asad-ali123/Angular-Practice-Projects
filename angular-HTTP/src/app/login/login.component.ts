@@ -53,7 +53,7 @@ export class LoginComponent {
         next: (res) => {
           console.log(res);
           this.isLoading = false;
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['dashboard/overview']);
 
 
         },
