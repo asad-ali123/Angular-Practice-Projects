@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { HeaderComponent } from "./header/header.component";
 
 import { FooterComponent } from "./footer/footer.component";
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './Services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,11 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css',
 
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-HTTP';
+  authservice: AuthService = inject(AuthService)
+
+  ngOnInit(): void {
+    this.authservice.autoLogin();
+  }
 }

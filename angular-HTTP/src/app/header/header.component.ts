@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../Services/auth.service';
 import { User } from '../Model/User';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ export class HeaderComponent {
 
   authService: AuthService = inject(AuthService);
   isLoggedIn: boolean = false;
-  router: Router = inject(Router);
+
   private userSubject !: Subscription;
 
 
@@ -31,9 +31,7 @@ export class HeaderComponent {
   }
 
   onLogout() {
-    this.isLoggedIn = false;
-    this.router.navigate([''])
-
+    this.authService.logout()
   }
 
 }
