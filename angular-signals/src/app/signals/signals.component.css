@@ -3,7 +3,7 @@
 }
 .task-container{
     margin-top: 20px;
-    border-top: #884EA0 3px solid;
+    border-top: #88509d 3px solid;
     padding: 30px 300px;
     text-align: center;
 }
@@ -12,7 +12,7 @@
     margin: 5px 0px;
     width: 660px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background-color: #5B2C6F;
+    background-color: #2f2733;
 }
 button{
     font-size: 35px;
@@ -20,7 +20,7 @@ button{
     height: 60px;
     border: none;
     border-radius: 2px;
-    background-color: #5B2C6F;
+    background-color: #2f2733;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 10px 10px;
     color:#D2B4DE;
