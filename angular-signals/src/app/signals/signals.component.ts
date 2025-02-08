@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-signals',
@@ -8,20 +8,24 @@ import { Component } from '@angular/core';
   styleUrl: './signals.component.css'
 })
 export class SignalsComponent {
-  counter: number = 0
-  message :string []=[]
+  counter = signal(0);
+  message = signal<any>([]);
 
   decrement() {
     // this.counter = + this.counter - 1
-    this.counter--
+    // this.counter.set(this.counter() - 1)
+    this.counter.update((pravValue) => pravValue - 1)
 
   }
 
   increment() {
     // this.counter = + this.counter +1
-    this.counter++
+    this.counter.set(this.counter() + 1)
+    this.message.update((pravMesg)=> [...pravMesg , 'Current value of counter is '+ this.counter()]);
+    // this.message.mutate((pravMesg) => pravMesg.push('Current value of counter is ' + this.counter()))
 
 
+``
   }
 
 }
