@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { SharedModule } from '../../utility/shared.component';
 
 @Component({
   selector: 'app-sidemenu',
-  imports: [],
+  imports: [SharedModule],
   templateUrl: './sidemenu.component.html',
   styleUrl: './sidemenu.component.css'
 })
