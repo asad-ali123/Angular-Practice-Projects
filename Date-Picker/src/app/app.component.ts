@@ -1,7 +1,7 @@
 // src/app/app.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, forwardRef } from '@angular/core';
+import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import {  IMyDpOptions } from 'mydatepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -9,10 +9,18 @@ import { ReactiveFormsModule } from '@angular/forms';
   selector: 'app-root',
   standalone: true,
   // Import FormsModule and MyDatePickerModule for template-driven forms and the date picker component.
-  imports: [ReactiveFormsModule , CommonModule , ],
+  imports: [ReactiveFormsModule, CommonModule , ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AppComponent  ),
+      multi: true,
+    }
+  ]
+
 })
 export class AppComponent {
   public myDatePickerOptions: IMyDpOptions = {
@@ -30,9 +38,11 @@ export class AppComponent {
       // example: {date: {year: 2018, month: 10, day: 9}} which sets this date to initial
       // value.
 
-      myDate: [null, Validators.required]
+      myDate: ["", Validators.required]
       // other controls are here...
     });
+    // this.myForm.value.myDate = 55
+    console.log(this.myForm.value)
   }
 
   setDate(): void {
