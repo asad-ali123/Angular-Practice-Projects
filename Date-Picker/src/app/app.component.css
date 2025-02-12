@@ -1,0 +1,9 @@
+/* src/app/app.component.css */
+.container {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
