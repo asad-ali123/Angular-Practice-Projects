@@ -1,0 +1,17 @@
+<!-- src/app/app.component.html -->
+<div class="container">
+  <h2>DatePicker Example with ngModel Binding</h2>
+  <form #myForm="ngForm" novalidate>
+    <div class="form-group">
+      <label for="mydate">Select Date:</label>
+      <!-- Date picker component with two-way binding to 'model' -->
+      <my-date-picker name="mydate"  [(ngModel)]="model" required></my-date-picker>
+    </div>
+    <!-- Display the selected date -->
+    <div>
+      <p>
+        Selected Date: {{ model?.date?.day }}-{{ model?.date?.month }}-{{ model?.date?.year }}
+      </p>
+    </div>
+  </form>
+</div>
