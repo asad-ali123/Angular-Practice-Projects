@@ -1,9 +1,16 @@
-/* src/app/app.component.css */
-.container {
-  margin: 20px;
-  font-family: Arial, sans-serif;
+.dp{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.start{
+    width: 80%;
 }
 
-.form-group {
-  margin-bottom: 15px;
+::ng-deep .btnpickerenabled{
+  
+    height: 35px;
+  padding-top: 4px;
+  background: #d05959 !important;
 }
+

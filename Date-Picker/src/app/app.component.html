@@ -1,8 +1,15 @@
-<div class="max-sm:w-full md:min-w-[140px] lg:min-w-[207px]">
-
-  <my-date-picker class="form-control my-date-picker picker-border" placeholder="Start Date" name="mydate"
+<!-- <my-date-picker class="form-control my-date-picker picker-border" placeholder="Start Date" name="mydate"
     [(ngModel)]="startDate" [options]="myDpOptions" readonly></my-date-picker>
     <my-date-picker class="form-control my-date-picker picker-border" placeholder="end Date" name="mydate"
-      [(ngModel)]="endDate" [options]="myDpOptions" readonly></my-date-picker>
+      [(ngModel)]="endDate" [options]="myDpOptions" readonly></my-date-picker> -->
 
-</div>
+<form [formGroup]="myForm" novalidate>
+  <div class="dp ">
+
+    <my-date-picker name="mydate" [options]="myDatePickerOptions" formControlName="myDate"
+      class="start"></my-date-picker>
+    <my-date-picker name="mydate" [options]="myDatePickerOptions" formControlName="myDate"
+      class="start"></my-date-picker>
+  </div>
+  <!-- other controls are here... -->
+</form>
