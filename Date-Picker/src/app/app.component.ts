@@ -1,53 +1,71 @@
 // src/app/app.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, forwardRef } from '@angular/core';
-import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import {  IMyDpOptions } from 'mydatepicker';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { IMyDpOptions, MyDatePickerModule } from '@murbanczyk-fp/mydatepicker';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   // Import FormsModule and MyDatePickerModule for template-driven forms and the date picker component.
-  imports: [ReactiveFormsModule, CommonModule , ],
+  imports: [MyDatePickerModule, CommonModule,FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppComponent  ),
-      multi: true,
-    }
-  ]
+  
 
 })
 export class AppComponent {
-  public myDatePickerOptions: IMyDpOptions = {
-    // other options...
-    dateFormat: 'dd.mm.yyyy',
+  public today = new Date();
+  startDate:any
+  endDate: any = {
+    date: {
+      year: this.today.getFullYear(),
+      month: this.today.getMonth() + 1,
+      day: this.today.getDate(),
+    },
+    isRange: false,
+    singleDate: { jsDate: new Date() },
   };
-
+  myDpOptions: IMyDpOptions = {
+    dateFormat: 'dd-mm-yyyy',
+    markCurrentDay: true,
+    monthSelector: false,
+    showTodayBtn: false,
+    showClearDateBtn: false,
+    inline: false,
+    editableDateField: false,
+    openSelectorOnInputClick: true,
+  };
   public myForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+
+  constructor(private formBuilder: FormBuilder) {
+  const yesterday = new Date(this.today);
+      yesterday.setDate(this.today.getDate() - 1);
+      this.startDate = {
+        date: {
+          year: 2025,
+          month: 1,
+          day: 1,
+        },
+        isRange: false,
+        singleDate: { jsDate: new Date(2025, 1, 1) },
+      };
+
+   
+
+   }
 
   ngOnInit() {
     this.myForm = this.formBuilder.group({
-      // Empty string or null means no initial value. Can be also specific date for
-      // example: {date: {year: 2018, month: 10, day: 9}} which sets this date to initial
-      // value.
-
-      myDate: ["", Validators.required]
+      myDate: [null, Validators.required]
       // other controls are here...
     });
-    // this.myForm.value.myDate = 55
-    console.log(this.myForm.value)
   }
 
   setDate(): void {
     // Set today date using the patchValue function
-    let date = new Date();
+    const date = new Date();
     this.myForm.patchValue({
       myDate: {
         date: {
@@ -57,10 +75,5 @@ export class AppComponent {
         }
       }
     });
-  }
-
-  clearDate(): void {
-    // Clear the date using the patchValue function
-    this.myForm.patchValue({ myDate: null });
   }
 }
