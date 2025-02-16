@@ -1,11 +1,7 @@
-<!-- <my-date-picker class="form-control my-date-picker picker-border" placeholder="Start Date" name="mydate"
-    [(ngModel)]="startDate" [options]="myDpOptions" readonly></my-date-picker>
-    <my-date-picker class="form-control my-date-picker picker-border" placeholder="end Date" name="mydate"
-      [(ngModel)]="endDate" [options]="myDpOptions" readonly></my-date-picker> -->
+
 
 <form [formGroup]="myForm" novalidate>
   <div class="flex gap-8 m-5 ">
-
     <my-date-picker name="mydate" [options]="myDatePickerOptions" formControlName="startDate"
       class="start"></my-date-picker>
     <my-date-picker name="mydate" [options]="myDatePickerOptions" formControlName="endDate"
