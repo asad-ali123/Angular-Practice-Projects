@@ -1,8 +1,4 @@
-.dp{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+
 .start{
     width: 80%;
 }
@@ -11,6 +7,10 @@
   
     height: 35px;
   padding-top: 4px;
-  background: #d05959 !important;
+  background: #d67575 !important;
 }
 
+::ng-deep .btnclear {
+    color:  red !important;
+
+}
